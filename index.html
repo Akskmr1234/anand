@@ -4,65 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Anand | Trading Development</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0b0f19;
-  --card:rgba(255,255,255,0.06);
-  --border:rgba(255,255,255,0.1);
-  --accent:#00d4ff;
-  --text:#ffffff;
-  --muted:#9ca3af;
+  --bg:#050810;
+  --surface:#0d1120;
+  --border:rgba(255,255,255,0.07);
+  --gold:#e8c97a;
+  --gold-dim:rgba(232,201,122,0.12);
+  --gold-glow:rgba(232,201,122,0.35);
+  --text:#f0ede6;
+  --muted:#6b7280;
+  --muted2:#9ca3af;
 }
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Space Grotesk',sans-serif;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 body{
   background:var(--bg);
   color:var(--text);
-  line-height:1.6;
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+}
+
+/* NOISE OVERLAY */
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:9999;
+  opacity:0.4;
 }
 
 /* NAV */
 header{
   position:fixed;
   width:100%;
-  padding:18px 8%;
+  padding:22px 7%;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  backdrop-filter:blur(14px);
-  background:rgba(11,15,25,0.7);
+  z-index:100;
+  transition:0.4s;
+}
+header.scrolled{
+  background:rgba(5,8,16,0.85);
+  backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);
-  z-index:1000;
+  padding:16px 7%;
 }
-
 .logo{
-  font-weight:700;
-  font-size:20px;
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:22px;
+  letter-spacing:-0.5px;
+  color:var(--text);
 }
-
-nav{
-  display:flex;
-  gap:25px;
-}
-
+.logo span{color:var(--gold);}
+nav{display:flex;gap:8px;align-items:center;}
 nav a{
-  color:var(--muted);
+  color:var(--muted2);
   text-decoration:none;
-  font-size:14px;
-  transition:0.3s;
+  font-size:13.5px;
+  font-weight:400;
+  padding:8px 16px;
+  border-radius:50px;
+  transition:0.25s;
+  letter-spacing:0.2px;
 }
-
-nav a:hover{
-  color:var(--accent);
+nav a:hover{color:var(--text);background:rgba(255,255,255,0.05);}
+.nav-cta{
+  background:var(--gold-dim);
+  border:1px solid rgba(232,201,122,0.25);
+  color:var(--gold)!important;
+  margin-left:6px;
+}
+.nav-cta:hover{
+  background:var(--gold)!important;
+  color:#000!important;
+  border-color:var(--gold)!important;
 }
 
 /* HERO */
@@ -71,150 +92,992 @@ nav a:hover{
   display:flex;
   flex-direction:column;
   justify-content:center;
+  align-items:flex-start;
+  padding:140px 7% 80px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* radial gradient orbs */
+.hero::after{
+  content:'';
+  position:absolute;
+  top:-20%;
+  right:-10%;
+  width:700px;
+  height:700px;
+  background:radial-gradient(circle, rgba(232,201,122,0.07) 0%, transparent 65%);
+  pointer-events:none;
+}
+.hero-orb2{
+  position:absolute;
+  bottom:-15%;
+  left:30%;
+  width:500px;
+  height:500px;
+  background:radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 65%);
+  pointer-events:none;
+}
+
+.eyebrow{
+  display:inline-flex;
   align-items:center;
-  text-align:center;
-  padding:120px 8% 60px;
+  gap:10px;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:28px;
+  opacity:0;
+  animation:fadeUp 0.7s 0.1s forwards;
+}
+.eyebrow-dot{
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--gold);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 0 0 var(--gold-glow);}
+  50%{box-shadow:0 0 0 8px transparent;}
 }
 
 .hero h1{
-  font-size:clamp(32px,5vw,56px);
-  max-width:800px;
-  line-height:1.2;
+  font-family:'Syne',sans-serif;
+  font-size:clamp(38px,5.5vw,72px);
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-2px;
+  max-width:780px;
+  opacity:0;
+  animation:fadeUp 0.8s 0.25s forwards;
+}
+.hero h1 em{
+  font-style:normal;
+  color:var(--gold);
+  position:relative;
+}
+.hero h1 em::after{
+  content:'';
+  position:absolute;
+  bottom:-4px;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(90deg, var(--gold), transparent);
+  border-radius:2px;
 }
 
-.hero span{
-  color:var(--accent);
+.hero-desc{
+  margin-top:28px;
+  color:var(--muted2);
+  font-size:17px;
+  font-weight:300;
+  max-width:520px;
+  line-height:1.7;
+  opacity:0;
+  animation:fadeUp 0.8s 0.4s forwards;
 }
 
-.hero p{
-  margin-top:20px;
-  color:var(--muted);
-  max-width:600px;
+.hero-actions{
+  margin-top:44px;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  opacity:0;
+  animation:fadeUp 0.8s 0.55s forwards;
 }
-
-.cta{
-  margin-top:35px;
-  padding:14px 32px;
-  border-radius:50px;
-  border:1px solid var(--border);
-  background:var(--card);
-  color:white;
+.btn-primary{
+  padding:15px 32px;
+  border-radius:6px;
+  background:var(--gold);
+  color:#0a0a0a;
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:0.3px;
   cursor:pointer;
-  transition:0.3s;
+  border:none;
+  transition:0.25s;
+  display:flex;align-items:center;gap:8px;
+}
+.btn-primary:hover{
+  background:#f0d68a;
+  transform:translateY(-2px);
+  box-shadow:0 12px 40px rgba(232,201,122,0.3);
+}
+.btn-secondary{
+  padding:15px 32px;
+  border-radius:6px;
+  background:transparent;
+  color:var(--text);
+  font-family:'Syne',sans-serif;
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:0.3px;
+  cursor:pointer;
+  border:1px solid var(--border);
+  transition:0.25s;
+}
+.btn-secondary:hover{
+  border-color:rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.04);
 }
 
-.cta:hover{
-  background:var(--accent);
-  color:#000;
+.hero-stats{
+  margin-top:80px;
+  display:flex;
+  gap:48px;
+  flex-wrap:wrap;
+  opacity:0;
+  animation:fadeUp 0.8s 0.7s forwards;
+  padding-top:48px;
+  border-top:1px solid var(--border);
+}
+.stat-item{}
+.stat-number{
+  font-family:'Syne',sans-serif;
+  font-size:36px;
+  font-weight:800;
+  color:var(--text);
+  letter-spacing:-1px;
+  line-height:1;
+}
+.stat-number span{color:var(--gold);}
+.stat-label{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:6px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* TICKER */
+.ticker-wrap{
+  overflow:hidden;
+  padding:16px 0;
+  background:var(--surface);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.ticker{
+  display:flex;
+  gap:0;
+  animation:ticker 22s linear infinite;
+  width:max-content;
+}
+.ticker-item{
+  padding:0 40px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  white-space:nowrap;
+}
+.ticker-item span{color:var(--gold);}
+.ticker-divider{color:var(--border);font-size:20px;}
+@keyframes ticker{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
 }
 
 /* SECTIONS */
-.section{
-  padding:100px 8%;
-  text-align:center;
+section{padding:110px 7%;}
+.section-label{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:20px;
+}
+.section-label::before{
+  content:'';
+  display:block;
+  width:24px;
+  height:1px;
+  background:var(--gold);
+}
+h2.section-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(28px,3.5vw,44px);
+  font-weight:800;
+  letter-spacing:-1.5px;
+  line-height:1.1;
+  margin-bottom:64px;
+}
+h2.section-title em{
+  font-style:normal;
+  color:var(--gold);
 }
 
-.section h2{
-  font-size:32px;
-  margin-bottom:60px;
-}
-
-/* GRID */
-.grid{
+/* SERVICES */
+#services{background:var(--surface);}
+.services-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:2px;
 }
-
-.card{
-  padding:40px;
-  border-radius:20px;
-  background:var(--card);
-  backdrop-filter:blur(12px);
+.service-card{
+  padding:44px 40px;
+  background:var(--bg);
   border:1px solid var(--border);
-  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+  transition:0.35s;
+  cursor:default;
 }
-
-.card:hover{
-  transform:translateY(-8px);
-  border-color:var(--accent);
+.service-card:hover{
+  border-color:rgba(232,201,122,0.3);
+  background:rgba(232,201,122,0.02);
 }
-
-.card h3{
-  margin-bottom:15px;
-  color:var(--accent);
+.service-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:2px;
+  background:linear-gradient(90deg, var(--gold), transparent);
+  opacity:0;
+  transition:0.35s;
 }
-
-.card p{
+.service-card:hover::before{opacity:1;}
+.service-num{
+  font-family:'Syne',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2px;
   color:var(--muted);
+  margin-bottom:30px;
+}
+.service-icon{
+  width:48px;height:48px;
+  border-radius:10px;
+  background:var(--gold-dim);
+  border:1px solid rgba(232,201,122,0.2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+  font-size:22px;
+}
+.service-card h3{
+  font-family:'Syne',sans-serif;
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:14px;
+  letter-spacing:-0.3px;
+}
+.service-card p{
+  color:var(--muted2);
+  font-size:15px;
+  line-height:1.7;
+  font-weight:300;
+}
+.service-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:28px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--gold);
+  letter-spacing:0.3px;
+  opacity:0;
+  transform:translateX(-8px);
+  transition:0.3s;
+}
+.service-card:hover .service-link{opacity:1;transform:translateX(0);}
+
+/* PROCESS */
+#process{
+  position:relative;
+}
+.process-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:80px;
+  align-items:center;
+}
+.process-text{}
+.process-steps{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.step{
+  display:flex;
+  gap:24px;
+  padding:28px 0;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  cursor:default;
+  transition:0.25s;
+}
+.step:first-child{padding-top:0;}
+.step:hover .step-num{
+  background:var(--gold);
+  color:#000;
+  border-color:var(--gold);
+}
+.step-num{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  color:var(--muted);
+  flex-shrink:0;
+  transition:0.25s;
+}
+.step-content h4{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:16px;
+  margin-bottom:6px;
+  letter-spacing:-0.2px;
+}
+.step-content p{
+  color:var(--muted2);
+  font-size:14px;
+  line-height:1.65;
+  font-weight:300;
+}
+
+.process-visual{
+  position:relative;
+}
+.chart-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:32px;
+  position:relative;
+  overflow:hidden;
+}
+.chart-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+}
+.chart-title{
+  font-family:'Syne',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  color:var(--text);
+}
+.chart-badge{
+  font-size:12px;
+  color:#4ade80;
+  background:rgba(74,222,128,0.1);
+  border:1px solid rgba(74,222,128,0.2);
+  padding:4px 12px;
+  border-radius:50px;
+  font-weight:500;
+}
+.chart-svg{width:100%;overflow:visible;}
+.mini-stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:24px;
+}
+.mini-stat{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px;
+}
+.mini-stat-val{
+  font-family:'Syne',sans-serif;
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-0.5px;
+}
+.mini-stat-val.up{color:#4ade80;}
+.mini-stat-val.gold{color:var(--gold);}
+.mini-stat-label{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:4px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+/* TESTIMONIALS */
+#testimonials{background:var(--surface);}
+.testimonials-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:24px;
+}
+.testimonial{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:36px;
+  transition:0.3s;
+}
+.testimonial:hover{border-color:rgba(232,201,122,0.2);}
+.stars{
+  display:flex;gap:3px;
+  margin-bottom:20px;
+  color:var(--gold);
+  font-size:14px;
+}
+.testimonial blockquote{
+  font-size:15px;
+  font-weight:300;
+  color:var(--muted2);
+  line-height:1.75;
+  margin-bottom:28px;
+  font-style:italic;
+}
+.testimonial-author{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.author-avatar{
+  width:42px;height:42px;
+  border-radius:50%;
+  background:var(--gold-dim);
+  border:1px solid rgba(232,201,122,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:15px;
+  color:var(--gold);
+}
+.author-name{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:14px;
+}
+.author-role{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+/* ABOUT */
+#about{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:100px;
+  align-items:center;
+  padding:110px 7%;
+}
+.about-text .section-label{margin-bottom:20px;}
+.about-text h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(26px,3vw,40px);
+  font-weight:800;
+  letter-spacing:-1.5px;
+  line-height:1.1;
+  margin-bottom:28px;
+}
+.about-text p{
+  color:var(--muted2);
+  font-size:15.5px;
+  font-weight:300;
+  line-height:1.8;
+  margin-bottom:18px;
+}
+.about-tags{
+  display:flex;flex-wrap:wrap;gap:10px;
+  margin-top:32px;
+}
+.tag{
+  padding:8px 16px;
+  border-radius:6px;
+  border:1px solid var(--border);
+  font-size:12.5px;
+  font-weight:500;
+  color:var(--muted2);
+  background:rgba(255,255,255,0.02);
+  transition:0.2s;
+}
+.tag:hover{border-color:rgba(232,201,122,0.3);color:var(--gold);}
+.about-card-wrap{position:relative;}
+.about-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:40px;
+}
+.about-achievement{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:20px 0;
+  border-bottom:1px solid var(--border);
+}
+.about-achievement:last-child{border-bottom:none;}
+.ach-icon{
+  width:44px;height:44px;
+  border-radius:10px;
+  background:var(--gold-dim);
+  border:1px solid rgba(232,201,122,0.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  flex-shrink:0;
+}
+.ach-val{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:20px;
+  letter-spacing:-0.5px;
+}
+.ach-desc{font-size:13px;color:var(--muted);margin-top:2px;}
+
+/* CTA SECTION */
+#cta{
+  padding:110px 7%;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+#cta::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse, rgba(232,201,122,0.08) 0%, transparent 65%);
+  pointer-events:none;
+}
+#cta h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(32px,4.5vw,58px);
+  font-weight:800;
+  letter-spacing:-2px;
+  line-height:1.1;
+  max-width:700px;
+  margin:0 auto 24px;
+}
+#cta p{
+  color:var(--muted2);
+  font-size:17px;
+  font-weight:300;
+  max-width:480px;
+  margin:0 auto 44px;
+  line-height:1.7;
+}
+.cta-buttons{
+  display:flex;
+  gap:16px;
+  justify-content:center;
+  flex-wrap:wrap;
 }
 
 /* FOOTER */
 footer{
-  text-align:center;
-  padding:40px 8%;
+  padding:48px 7%;
   border-top:1px solid var(--border);
-  color:var(--muted);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
 }
+.footer-logo{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:18px;
+}
+.footer-logo span{color:var(--gold);}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{
+  font-size:13px;
+  color:var(--muted);
+  text-decoration:none;
+  transition:0.2s;
+}
+.footer-links a:hover{color:var(--text);}
+.footer-copy{font-size:13px;color:var(--muted);}
 
-/* MOBILE NAV */
-@media(max-width:768px){
-  nav{
-    display:none;
+/* RESPONSIVE */
+@media(max-width:900px){
+  .process-grid,#about{
+    grid-template-columns:1fr;
+    gap:48px;
   }
+  .process-visual{display:none;}
+  .hero-stats{gap:32px;}
+}
+@media(max-width:640px){
+  nav a:not(.nav-cta){display:none;}
+  .hero h1{letter-spacing:-1px;}
+  .hero-stats{gap:24px;}
+  .stat-number{font-size:28px;}
+  footer{flex-direction:column;text-align:center;}
 }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">Anand</div>
+<!-- NAV -->
+<header id="header">
+  <div class="logo">Anand<span>.</span></div>
   <nav>
     <a href="#services">Services</a>
+    <a href="#process">Process</a>
     <a href="#about">About</a>
-    <a href="#contact">Contact</a>
+    <a href="#cta" class="nav-cta">Book a Call →</a>
   </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero">
-  <h1>Build a <span>Scalable Trading Business</span> with Strategic Precision</h1>
-  <p>Structured systems, disciplined risk management, and capital growth strategies designed for serious traders.</p>
-  <button class="cta">Book Strategy Call</button>
-</section>
-
-<section class="section" id="services">
-  <h2>Core Services</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Trading System Design</h3>
-      <p>Build rule-based, scalable trading models focused on long-term consistency.</p>
+  <div class="hero-orb2"></div>
+  <div class="eyebrow"><span class="eyebrow-dot"></span>Trading Development & Strategy</div>
+  <h1>Build a <em>Scalable</em><br>Trading Business<br>That Compounds</h1>
+  <p class="hero-desc">From ad-hoc execution to a disciplined, rule-based operation. I help serious traders architect systems built for long-term capital growth.</p>
+  <div class="hero-actions">
+    <button class="btn-primary">Book Strategy Call <span>→</span></button>
+    <button class="btn-secondary">View Case Studies</button>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-number">8<span>+</span></div>
+      <div class="stat-label">Years Trading</div>
     </div>
-    <div class="card">
-      <h3>Capital Structuring</h3>
-      <p>Optimize risk allocation and compounding frameworks for growth.</p>
+    <div class="stat-item">
+      <div class="stat-number">120<span>+</span></div>
+      <div class="stat-label">Traders Coached</div>
     </div>
-    <div class="card">
-      <h3>Performance Optimization</h3>
-      <p>Refine execution, analytics, and process discipline for improved returns.</p>
+    <div class="stat-item">
+      <div class="stat-number">94<span>%</span></div>
+      <div class="stat-label">Retention Rate</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">3.2<span>x</span></div>
+      <div class="stat-label">Avg. Capital Growth</div>
     </div>
   </div>
 </section>
 
-<section class="section" id="about">
-  <h2>About Anand</h2>
-  <p style="max-width:700px;margin:auto;color:var(--muted);">
-  Anand helps traders transition from random execution to structured, system-based trading businesses built for scalability and sustainability.
-  </p>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <!-- Doubled for seamless loop -->
+    <span class="ticker-item">Trading System Design <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Risk Management <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Capital Structuring <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Performance Analytics <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Execution Discipline <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Compounding Frameworks <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Portfolio Strategy <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Drawdown Control <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Trading System Design <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Risk Management <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Capital Structuring <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Performance Analytics <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Execution Discipline <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Compounding Frameworks <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Portfolio Strategy <span class="ticker-divider">·</span></span>
+    <span class="ticker-item">Drawdown Control <span class="ticker-divider">·</span></span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">Core Services</div>
+  <h2 class="section-title">Everything You Need to<br><em>Trade Professionally</em></h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">⚙️</div>
+      <h3>Trading System Design</h3>
+      <p>We build rule-based, back-tested trading models that remove emotion from your decision-making. Every entry, exit, and position size follows a defined, repeatable process.</p>
+      <div class="service-link">Learn more →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">📐</div>
+      <h3>Capital Structuring</h3>
+      <p>Optimize how your capital is allocated across strategies, timeframes, and instruments. Intelligent risk-weighting and compounding frameworks that protect downside while maximizing upside.</p>
+      <div class="service-link">Learn more →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">📊</div>
+      <h3>Performance Optimization</h3>
+      <p>Deep dive into your trading journal, identify behavioral leaks, refine your edge, and implement metrics that give you clear, unbiased feedback on every trade you take.</p>
+      <div class="service-link">Learn more →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-icon">🛡️</div>
+      <h3>Risk Management Overhaul</h3>
+      <p>From position sizing to drawdown protocols, we design the guardrails that keep you in the game long enough for your edge to play out — through every market condition.</p>
+      <div class="service-link">Learn more →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-icon">🧠</div>
+      <h3>Trader Psychology Coaching</h3>
+      <p>Master the mental game. We address cognitive biases, tilt, revenge trading, and FOMO through structured frameworks that build the emotional resilience elite traders run on.</p>
+      <div class="service-link">Learn more →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-icon">🗺️</div>
+      <h3>Business Roadmap</h3>
+      <p>Treat your trading like the business it is. Licensing, account structures, tax optimization, and scaling plans designed to take you from solo trader to serious capital operator.</p>
+      <div class="service-link">Learn more →</div>
+    </div>
+  </div>
 </section>
 
-<section class="section" id="contact">
-  <h2>Start Scaling Today</h2>
-  <button class="cta">Get In Touch</button>
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">A Structured Path<br>to <em>Consistent Profits</em></h2>
+  <div class="process-grid">
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h4>Deep Diagnostic</h4>
+          <p>We start by auditing your current systems, equity curve, risk behavior, and psychology to find exactly where performance is leaking.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h4>Strategy Architecture</h4>
+          <p>Together we build or refine your core trading strategy — defining rules, triggers, sizing, and the conditions that keep you out of bad trades.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h4>Capital & Risk Framework</h4>
+          <p>Implement the financial infrastructure: position sizing models, drawdown limits, compounding schedules, and scaling milestones.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h4>Live Execution & Accountability</h4>
+          <p>We track your execution in real time, run weekly reviews, and iterate rapidly based on what the market is telling your data.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h4>Scale & Automate</h4>
+          <p>Once consistency is proven, we build the systems to scale capital, reduce manual workload, and operate your trading as a true business.</p>
+        </div>
+      </div>
+    </div>
+    <div class="process-visual">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Equity Curve — Sample Client</div>
+          <div class="chart-badge">▲ +187%</div>
+        </div>
+        <svg class="chart-svg" viewBox="0 0 360 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#e8c97a" stop-opacity="0.25"/>
+              <stop offset="100%" stop-color="#e8c97a" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid lines -->
+          <line x1="0" y1="40" x2="360" y2="40" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="0" y1="80" x2="360" y2="80" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <line x1="0" y1="120" x2="360" y2="120" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+          <!-- Fill -->
+          <path d="M0 140 L40 135 L70 128 L90 132 L110 122 L140 110 L160 105 L185 88 L210 75 L235 58 L260 50 L285 38 L310 28 L340 15 L360 10 L360 160 L0 160 Z" fill="url(#chartGrad)"/>
+          <!-- Line -->
+          <path d="M0 140 L40 135 L70 128 L90 132 L110 122 L140 110 L160 105 L185 88 L210 75 L235 58 L260 50 L285 38 L310 28 L340 15 L360 10" stroke="#e8c97a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Dot at end -->
+          <circle cx="360" cy="10" r="5" fill="#e8c97a"/>
+          <circle cx="360" cy="10" r="9" fill="#e8c97a" opacity="0.25"/>
+        </svg>
+        <div class="mini-stats">
+          <div class="mini-stat">
+            <div class="mini-stat-val up">+187%</div>
+            <div class="mini-stat-label">Total Return</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val gold">18 mo</div>
+            <div class="mini-stat-label">Time Frame</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val up">2.8</div>
+            <div class="mini-stat-label">Sharpe Ratio</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val gold">11%</div>
+            <div class="mini-stat-label">Max Drawdown</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-label">Client Results</div>
+  <h2 class="section-title">What Traders Say<br>After <em>Working Together</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Before working with Anand I was profitable but inconsistent — one great month, two bad ones. Now I have a real system and the data to trust it. My equity curve has never looked this clean."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">R</div>
+        <div>
+          <div class="author-name">Rahul M.</div>
+          <div class="author-role">Futures Trader · 2 years</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <blockquote>"The capital structuring work alone was worth 10x the investment. I was sizing positions completely wrong and bleeding edge on bad days. Complete game-changer."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">S</div>
+        <div>
+          <div class="author-name">Sneha K.</div>
+          <div class="author-role">Equity Options Trader · 3 years</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <blockquote>"Anand doesn't sell you a strategy — he teaches you to build one. The mindset shift from 'taking trades' to 'running a business' changed everything about how I approach the market."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">V</div>
+        <div>
+          <div class="author-name">Vikram P.</div>
+          <div class="author-role">Forex & Indices Trader · 4 years</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="about-text">
+    <div class="section-label">About Anand</div>
+    <h2>A Trader Who Builds<br>Systems, Not Just Calls</h2>
+    <p>I spent years learning the hard way — chasing setups, over-leveraging, letting emotions drive decisions. The turning point was when I stopped asking "what should I trade?" and started asking "how do I build a business that trades?"</p>
+    <p>Today I work with ambitious traders — from part-time operators to those managing six-figure accounts — to design the systems, structures, and mindset frameworks that turn trading from a gamble into a craft.</p>
+    <p>My approach is direct, data-driven, and built on what actually works in real markets. No indicators. No black boxes. Just clear rules, honest numbers, and relentless execution discipline.</p>
+    <div class="about-tags">
+      <span class="tag">Futures</span>
+      <span class="tag">Equity Options</span>
+      <span class="tag">Forex</span>
+      <span class="tag">Indices</span>
+      <span class="tag">Systematic Trading</span>
+      <span class="tag">Discretionary</span>
+      <span class="tag">Algo Development</span>
+    </div>
+  </div>
+  <div class="about-card-wrap">
+    <div class="about-card">
+      <div class="about-achievement">
+        <div class="ach-icon">🏆</div>
+        <div>
+          <div class="ach-val">120+ Traders</div>
+          <div class="ach-desc">Coached to systematic profitability</div>
+        </div>
+      </div>
+      <div class="about-achievement">
+        <div class="ach-icon">📈</div>
+        <div>
+          <div class="ach-val">₹12Cr+ Capital</div>
+          <div class="ach-desc">Managed & structured across portfolios</div>
+        </div>
+      </div>
+      <div class="about-achievement">
+        <div class="ach-icon">⏱️</div>
+        <div>
+          <div class="ach-val">8+ Years</div>
+          <div class="ach-desc">Active trading & development experience</div>
+        </div>
+      </div>
+      <div class="about-achievement">
+        <div class="ach-icon">🎯</div>
+        <div>
+          <div class="ach-val">94% Retention</div>
+          <div class="ach-desc">Client satisfaction & continued partnership</div>
+        </div>
+      </div>
+      <div class="about-achievement">
+        <div class="ach-icon">🌐</div>
+        <div>
+          <div class="ach-val">NSE · BSE · MCX</div>
+          <div class="ach-desc">Multi-exchange, multi-asset expertise</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section id="cta">
+  <h2>Ready to Trade Like<br>a <em style="color:var(--gold);font-style:normal;">Business?</em></h2>
+  <p>Let's spend 30 minutes mapping out exactly what's holding your performance back — and how to fix it.</p>
+  <div class="cta-buttons">
+    <button class="btn-primary">Book Free Strategy Call →</button>
+    <button class="btn-secondary">Send a Message</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-© 2026 Anand Trading Development. All Rights Reserved.
+  <div class="footer-logo">Anand<span>.</span></div>
+  <div class="footer-links">
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#about">About</a>
+    <a href="#cta">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Anand Trading Development.</div>
 </footer>
 
+<script>
+  // Sticky nav
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.service-card, .step, .testimonial, .about-achievement').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
 </body>
 </html>
