@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anand | Trading Business Development</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+body{
+    background:#0f172a;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+/* Animated Gradient Background */
+body::before{
+    content:'';
+    position:fixed;
+    width:200%;
+    height:200%;
+    background:linear-gradient(45deg,#0ea5e9,#6366f1,#8b5cf6,#0ea5e9);
+    background-size:400% 400%;
+    animation:gradientMove 15s ease infinite;
+    z-index:-2;
+}
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* Floating Blur Orbs */
+.blur{
+    position:absolute;
+    width:400px;
+    height:400px;
+    background:#38bdf8;
+    filter:blur(150px);
+    opacity:0.4;
+    border-radius:50%;
+    animation:float 10s infinite alternate;
+}
+.blur:nth-child(1){top:-100px;left:-100px;}
+.blur:nth-child(2){bottom:-150px;right:-100px;background:#8b5cf6;}
+
+@keyframes float{
+    from{transform:translateY(0px);}
+    to{transform:translateY(50px);}
+}
+
+/* Navbar */
+header{
+    position:fixed;
+    width:100%;
+    padding:20px 10%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(15px);
+    background:rgba(255,255,255,0.05);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    z-index:1000;
+}
+.logo{
+    font-size:24px;
+    font-weight:700;
+}
+nav a{
+    margin-left:25px;
+    text-decoration:none;
+    color:#fff;
+    transition:0.3s;
+}
+nav a:hover{
+    color:#38bdf8;
+}
+
+/* Hero */
+.hero{
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 10%;
+}
+.hero h1{
+    font-size:55px;
+    margin-bottom:20px;
+    animation:fadeUp 1.5s ease;
+}
+.hero span{
+    color:#38bdf8;
+}
+.hero p{
+    max-width:600px;
+    margin-bottom:30px;
+    opacity:0.8;
+}
+.btn{
+    padding:14px 32px;
+    border-radius:40px;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    background:rgba(255,255,255,0.2);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.3);
+    color:#fff;
+    transition:0.3s;
+}
+.btn:hover{
+    background:#38bdf8;
+    transform:translateY(-5px);
+}
+
+/* Sections */
+.section{
+    padding:120px 10%;
+    text-align:center;
+}
+.section h2{
+    font-size:40px;
+    margin-bottom:60px;
+}
+
+/* Glass Cards */
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:40px;
+}
+.card{
+    padding:40px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.2);
+    transition:0.4s;
+    opacity:0;
+    transform:translateY(50px);
+}
+.card.show{
+    opacity:1;
+    transform:translateY(0);
+}
+.card:hover{
+    transform:translateY(-10px);
+    background:rgba(255,255,255,0.15);
+}
+.card h3{
+    margin-bottom:15px;
+    color:#38bdf8;
+}
+
+/* Footer */
+footer{
+    text-align:center;
+    padding:40px;
+    background:rgba(0,0,0,0.5);
+    backdrop-filter:blur(10px);
+}
+
+/* Animations */
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+@media(max-width:768px){
+    .hero h1{font-size:36px;}
+}
+</style>
+</head>
+<body>
+
+<div class="blur"></div>
+<div class="blur"></div>
+
+<header>
+    <div class="logo">Anand</div>
+    <nav>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Scale Your Trading Business with <span>Precision</span></h1>
+    <p>Elite-level trading development strategies designed to optimize capital growth and build consistent profitability.</p>
+    <button class="btn">Start Growing</button>
+</section>
+
+<section class="section" id="services">
+    <h2>Core Services</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>Strategy Engineering</h3>
+            <p>Data-driven trading models built for sustainable performance.</p>
+        </div>
+        <div class="card">
+            <h3>Capital Optimization</h3>
+            <p>Advanced portfolio management & risk control systems.</p>
+        </div>
+        <div class="card">
+            <h3>Market Intelligence</h3>
+            <p>Technical & macro analysis for smarter decision making.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="about">
+    <h2>About Anand</h2>
+    <p>Anand helps traders and firms elevate their systems with structured business development strategies that prioritize discipline, capital preservation, and scalable growth.</p>
+</section>
+
+<section class="section" id="contact">
+    <h2>Let’s Work Together</h2>
+    <button class="btn">Contact Now</button>
+</section>
+
+<footer>
+© 2026 Anand Trading Development | All Rights Reserved
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+});
+
+document.querySelectorAll(".card").forEach(card => {
+    observer.observe(card);
+});
+</script>
+
+</body>
+</html>
